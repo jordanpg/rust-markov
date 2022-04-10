@@ -60,6 +60,7 @@ dependencies = [
  "indexmap",
  "petgraph",
  "rand",
+ "text_io",
 ]
 
 [[package]]
@@ -107,6 +108,12 @@ checksum = "d34f1408f55294453790c48b2f1ebbb1c5b4b7563eb1f418bcfcfdbb06ebb4e7"
 dependencies = [
  "getrandom",
 ]
+
+[[package]]
+name = "text_io"
+version = "0.1.10"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "442f2674e6bd8489052b958e0eaebd89c26eefa3be9dc359d1e2ecccdc510f45"
 
 [[package]]
 name = "wasi"
