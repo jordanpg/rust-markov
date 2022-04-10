@@ -23,7 +23,7 @@ impl<'a> MarkovBot<'a> {
 		weight
 	}
 
-	pub fn chain(&mut self, word: &str) -> &str {
+	pub fn chain(&mut self, word: &str) -> &'a str {
 		match self.words.get_index_of(word) {
 			Some(id) => {
 				let edges = self.graph.edges(id).collect::<Vec<_>>();
@@ -44,6 +44,32 @@ impl<'a> MarkovBot<'a> {
 			},
 			None => return "",
 		}
+	}
+
+	pub fn ingest(&mut self, sentence: &'a str) {
+		let split: Vec<&str> = sentence.trim().split(" ").filter(|word| word.len() > 0).collect();
+		let mut curr = "";
+		for word in &split {
+			self.add_link(curr, word);
+			curr = *word;
+		}
+		self.add_link(curr, "");
+	}
+
+	pub fn generate(&mut self, max_words: usize) -> String {
+		let mut words: Vec<&str> = Vec::with_capacity(max_words);
+		let mut i = 0;
+		let mut w = "";
+		loop {
+			w = self.chain(w);
+			if w == "" || i >= max_words {
+				break;
+			}
+			words.push(w);
+			i += 1;
+		}
+
+		words.join(" ")
 	}
 }
 
